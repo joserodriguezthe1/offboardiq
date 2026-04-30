@@ -1,0 +1,85 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "IAMRead",
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetUser",
+        "iam:ListUsers",
+        "iam:ListGroupsForUser",
+        "iam:ListAttachedUserPolicies",
+        "iam:ListAccessKeys",
+        "iam:ListMFADevices",
+        "iam:ListUserPolicies",
+        "iam:ListUserTags"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "IAMOffboard",
+      "Effect": "Allow",
+      "Action": [
+        "iam:DeleteLoginProfile",
+        "iam:DeactivateMFADevice",
+        "iam:DeleteAccessKey",
+        "iam:UpdateAccessKey",
+        "iam:RemoveUserFromGroup",
+        "iam:DetachUserPolicy",
+        "iam:DeleteUserPolicy",
+        "iam:TagUser"
+      ],
+      "Resource": "arn:aws:iam::*:user/*"
+    },
+    {
+      "Sid": "S3Evidence",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::offboardiq-evidence",
+        "arn:aws:s3:::offboardiq-evidence/*"
+      ]
+    },
+    {
+      "Sid": "DynamoDB",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query"
+      ],
+      "Resource": "arn:aws:dynamodb:*:*:table/OffboardAuditLog"
+    },
+    {
+      "Sid": "SNS",
+      "Effect": "Allow",
+      "Action": [
+        "sns:Publish"
+      ],
+      "Resource": "arn:aws:sns:*:*:offboardiq-alerts"
+    },
+    {
+      "Sid": "CloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Sid": "Bedrock",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeAgent"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
