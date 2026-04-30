@@ -1,4 +1,4 @@
-# 🔐 OffboardIQ — AI-Powered Employee Offboarding Agent
+# OffboardIQ AI-Powered Employee Offboarding Agent
 ### Built on AWS Bedrock | Aligned to NIST SP 800-53 Rev 5 | GRC Engineering Portfolio Project
 
 ---
