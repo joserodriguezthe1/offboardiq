@@ -1,0 +1,75 @@
+{
+  "reportType": "OffboardingEvidenceReport",
+  "reportVersion": "1.0",
+  "generatedAt": "2026-04-30T22:17:53.273145+00:00",
+  "generatedBy": "OffboardIQ-Agent (Amazon Bedrock / Claude Haiku 4.5)",
+  "employeeId": "sample-employee",
+  "rmfControls": ["AC-2", "AU-11", "PS-4", "SI-12"],
+  "offboardingStatus": "COMPLETE",
+  "iamSnapshot": {
+    "user": {
+      "UserName": "sample-employee",
+      "UserId": "AIDAXXXXXXXXXXXXXXXXX",
+      "Arn": "arn:aws:iam::123456789012:user/sample-employee"
+    },
+    "groups": [],
+    "policies": []
+  },
+  "actionsCompleted": [
+    {
+      "step": 1,
+      "name": "Disable User Access",
+      "timestamp": "2026-04-30T22:17:48.740780+00:00",
+      "actions": [
+        { "action": "delete_login_profile", "status": "success" },
+        { "action": "delete_access_key", "status": "success" },
+        { "action": "deactivate_mfa", "status": "skipped" },
+        { "action": "tag_user", "status": "success" }
+      ],
+      "rmfControls": ["AC-2", "PS-4", "IA-4"]
+    },
+    {
+      "step": 2,
+      "name": "Remove Groups and Policies",
+      "timestamp": "2026-04-30T22:17:51.171790+00:00",
+      "actions": [
+        { "action": "remove_groups", "status": "skipped - no groups attached" },
+        { "action": "detach_policies", "status": "skipped - no policies attached" }
+      ],
+      "rmfControls": ["AC-2", "AC-3", "PS-4"]
+    },
+    {
+      "step": 3,
+      "name": "Archive User Data",
+      "timestamp": "2026-04-30T22:17:53.273145+00:00",
+      "actions": [
+        { "action": "collect_snapshot", "status": "success" },
+        { "action": "save_to_s3", "status": "success" }
+      ],
+      "evidenceLocation": "s3://offboardiq-evidence/offboarding-reports/2026-04-30/sample-employee_report.json",
+      "rmfControls": ["AU-11", "PS-4", "SI-12"]
+    },
+    {
+      "step": 4,
+      "name": "Audit and Notification",
+      "timestamp": "2026-04-30T22:17:55.924748+00:00",
+      "actions": [
+        { "action": "write_audit_log", "status": "success" },
+        { "action": "send_sns", "status": "success" }
+      ],
+      "rmfControls": ["AU-2", "AU-12", "IR-6"]
+    }
+  ],
+  "auditStatement": "Employee sample-employee was offboarded on 2026-04-30. All console access, access keys, group memberships, and attached policies have been removed in accordance with NIST SP 800-53 Rev 5 controls AC-2 (Account Management) and PS-4 (Personnel Termination). This report constitutes evidence for the System Security Plan (SSP) and continuous monitoring activities.",
+  "controlsSummary": {
+    "AC-2": "Account Management — IAM user disabled and tagged",
+    "AC-3": "Access Enforcement — All group memberships removed",
+    "PS-4": "Personnel Termination — Full access revocation completed",
+    "IA-4": "Identifier Management — User identifier tagged as offboarded",
+    "AU-2": "Event Logging — All actions logged to CloudTrail",
+    "AU-11": "Audit Record Retention — Evidence archived to encrypted S3",
+    "AU-12": "Audit Record Generation — DynamoDB audit record written",
+    "IR-6": "Incident Reporting — SNS notification sent to security team",
+    "SI-12": "Information Handling — IAM snapshot preserved before removal"
+  }
+}
