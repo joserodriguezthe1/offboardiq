@@ -131,23 +131,23 @@ Please offboard employee with IAM username: john.doe
 
 ### 2. Agent Orchestrates All 4 Steps Automatically
 
-**Step 1 — Disable User Access**
+**Step 1 - Disable User Access**
 - Deletes console login profile
 - Deactivates and deletes all access keys
 - Deactivates MFA devices
 - Tags user with offboard timestamp
 
-**Step 2 — Remove Groups & Policies**
+**Step 2 - Remove Groups & Policies**
 - Removes user from all IAM groups
 - Detaches all managed policies
 - Deletes all inline policies
 
-**Step 3 — Archive Evidence**
+**Step 3 - Archive Evidence**
 - Collects full IAM user snapshot
 - Generates RMF evidence report
 - Saves encrypted JSON to S3
 
-**Step 4 — Audit & Notify**
+**Step 4 - Audit & Notify**
 - Writes audit record to DynamoDB
 - Sends SNS email to security team
 
@@ -181,8 +181,6 @@ Please offboard employee with IAM username: john.doe
 | AWS CloudTrail | API audit trail | 1 trail free always |
 | AWS IAM | Access control | Always free |
 
-**Estimated cost per offboarding run: < $0.05**
-
 ---
 
 ## ⚙️ Setup Guide
@@ -194,32 +192,32 @@ Please offboard employee with IAM username: john.doe
 
 ### Deployment Steps
 
-#### Phase 1 — IAM Role
+#### Phase 1 - IAM Role
 1. Create role `OffboardIQ-AgentRole` with Lambda + Bedrock trust policy
 2. Attach `AWSLambdaBasicExecutionRole` managed policy
 3. Add inline policy from `iam/inline-policy.json`
 
-#### Phase 2 — Storage & Audit
+#### Phase 2 - Storage & Audit
 1. Create S3 bucket `offboardiq-evidence` with AES-256 encryption and versioning
 2. Create DynamoDB table `OffboardAuditLog` (partition: `employeeId`, sort: `timestamp`)
 3. Create SNS topic `offboardiq-alerts` with email subscription
 4. Enable CloudTrail trail logging to S3 bucket
 
-#### Phase 3 — Lambda Functions
+#### Phase 3 - Lambda Functions
 Deploy all 4 functions from the `lambda/` folder using:
 - Runtime: Python 3.12
 - Role: `OffboardIQ-AgentRole`
 - Timeout: 30 seconds
 - Add `SNS_TOPIC_ARN` environment variable to `lambda_notify_log.py`
 
-#### Phase 4 — Bedrock Agent
+#### Phase 4 - Bedrock Agent
 1. Enable Claude Haiku 4.5 model access in Bedrock console
 2. Create agent `OffboardIQ-Agent` with Claude Haiku 4.5
 3. Add 4 action groups (function-based) pointing to each Lambda
 4. Save and prepare the agent
 5. Create alias `prod-v1`
 
-#### Phase 5 — Test
+#### Phase 5 - Test
 ```
 Please offboard employee with IAM username: test-offboard-user
 ```
@@ -253,18 +251,18 @@ Verify evidence in S3, audit log in DynamoDB, and email notification.
 
 | RMF Step | Activity | How Demonstrated |
 |----------|----------|-----------------|
-| **Step 3 — Implement** | Control implementation | Lambda functions automate AC-2, PS-4 |
-| **Step 4 — Assess** | Control assessment | Agent validates all steps completed |
-| **Step 6 — Monitor** | Continuous monitoring | CloudTrail + DynamoDB provide ongoing audit |
+| **Step 3 - Implement** | Control implementation | Lambda functions automate AC-2, PS-4 |
+| **Step 4 - Assess** | Control assessment | Agent validates all steps completed |
+| **Step 6 - Monitor** | Continuous monitoring | CloudTrail + DynamoDB provide ongoing audit |
 
 ---
 
 ## 💡 Key Takeaways
 
-- **AI agents can automate GRC controls** — not just detect issues but actively remediate them
-- **Evidence generation can be automatic** — every offboarding produces ATO-ready artifacts
-- **NIST 800-53 controls are implementable in code** — PS-4 and AC-2 are not just policy documents
-- **Cost is not a barrier** — this entire project runs for pennies per offboarding event
+- **AI agents can automate GRC controls** - not just detect issues but actively remediate them
+- **Evidence generation can be automatic** - every offboarding produces ATO-ready artifacts
+- **NIST 800-53 controls are implementable in code** - PS-4 and AC-2 are not just policy documents
+- **Cost is not a barrier** - this entire project runs for pennies per offboarding event
 
 ---
 
@@ -279,4 +277,4 @@ AI automation, cloud security, and risk management frameworks.
 
 ## 📄 License
 
-MIT License — feel free to use, modify, and build on this project.
+MIT License - feel free to use, modify, and build on this project.
