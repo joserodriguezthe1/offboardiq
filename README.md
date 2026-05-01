@@ -19,7 +19,7 @@
 
 Manual employee offboarding is one of the most common findings in security audits:
 - Orphaned accounts left active after employees depart
-- Inconsistent execution — steps get missed
+- Inconsistent execution - steps get missed
 - No automatic audit trail or evidence generation
 - Direct violations of AC-2, PS-4, and IA-4 controls
 
